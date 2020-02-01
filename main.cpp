@@ -74,7 +74,8 @@ int main()
         cout << "(3) Degradado (Arriba a bajo)" << endl;
         cout << "(4) Degradado (Abajo a arriba)" << endl;
         cout << "(5) Imagen negativa" << endl;
-        cout << "(6) Salir del programa" << endl;
+        cout << "(6) Escala de grises" << endl;
+        cout << "(7) Salir del programa" << endl;
         cout << "Accion: "; cin >> respuesta;
         switch (respuesta)
         {
@@ -164,6 +165,24 @@ int main()
             }
             break;
         case 6:
+            {
+                int ans = -1;
+                string n;
+                Imagen img = CrearCargar();
+                Imagen copia = f.Copiar(img);
+                // f.EscalaGrises(copia);
+                f.Potencia(copia);
+                cout << "------------------------------" << endl << "Imagen generada correctamente" << endl;
+                // f.Imprimir(copia);
+                cout << "Desea guardar la nueva imagen? (1 = si, 0 = no): "; cin >> ans;
+                if(ans == 1)
+                {
+                    cout << "Nombre del nuevo archivo: "; cin >> n;
+                    f.Guardar(copia, n);
+                }
+            }
+            break;
+        case 7:
             cout << "Programa finalizado :)";
             return 0;
             break;

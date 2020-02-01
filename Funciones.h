@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <fstream>
 #include <string>
+#include <math.h>
 #include "Imagen.h"
 using namespace std;
 
@@ -19,6 +20,8 @@ class Funciones
         Imagen DegradadoArAb(Imagen img);
         Imagen DegradadoAbAr(Imagen img);
         Imagen Negativo(Imagen img);
+        Imagen EscalaGrises(Imagen img);
+        Imagen Potencia(Imagen img);
 };
 
 void Funciones::Imprimir(Imagen img)
@@ -258,6 +261,44 @@ Imagen Funciones::Negativo(Imagen img)
             img.pixel[in].R = img.bpp - img.pixel[in].R;
             img.pixel[in].G = img.bpp - img.pixel[in].G;
             img.pixel[in].B = img.bpp - img.pixel[in].B;
+            in++;
+        }
+    }
+    return img;
+}
+
+Imagen Funciones::EscalaGrises(Imagen img)
+{
+    float proporcion = float(img.bpp) / (float)img.ancho;
+    int in = 0, gris;
+    for (int i = 0; i < img.alto; i++)
+    {
+        for (int j = 0; j < img.ancho; j++)
+        {
+            gris = (img.pixel[in].R + img.pixel[in].G + img.pixel[in].B) / 3;
+            img.pixel[in].R = gris;
+            img.pixel[in].G = gris;
+            img.pixel[in].B = gris;
+            in++;
+        }
+    }
+    return img;
+}
+
+Imagen Funciones::Potencia(Imagen img)
+{
+    float proporcion = float(img.bpp) / (float)img.ancho;
+    int in = 0, gris;
+    for (int i = 0; i < img.alto; i++)
+    {
+        for (int j = 0; j < img.ancho; j++)
+        {
+            img.pixel[in].R = img.bpp * (pow((double)(img.pixel[in].R/255), 0.5));
+            img.pixel[in].G = img.bpp * (pow((double)(img.pixel[in].G/255), 0.5));
+            img.pixel[in].B = img.bpp * (pow((double)(img.pixel[in].B/255), 0.5));
+            cout << img.bpp * (pow((double)(img.pixel[in].R/255), 0.5)) << endl;
+            cout << img.bpp * (pow((double)(img.pixel[in].G/255), 0.5)) << endl;
+            cout << img.bpp * (pow((double)(img.pixel[in].B/255), 0.5)) << endl;
             in++;
         }
     }
