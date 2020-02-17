@@ -21,7 +21,12 @@ class Funciones
         Imagen DegradadoAbAr(Imagen img);
         Imagen Negativo(Imagen img);
         Imagen EscalaGrises(Imagen img);
-        Imagen Potencia(Imagen img);
+        Imagen Potencia(Imagen img, double alpha);
+        Imagen AclaradoLogaritmico(Imagen img, double alpha);
+        Imagen Seno(Imagen img);
+        Imagen Exponencial(Imagen img, double alpha);
+        Imagen Cosenoidal(Imagen img);
+        Imagen Exponencial2(Imagen img, double alpha);
 };
 
 void Funciones::Imprimir(Imagen img)
@@ -285,7 +290,7 @@ Imagen Funciones::EscalaGrises(Imagen img)
     return img;
 }
 
-Imagen Funciones::Potencia(Imagen img)
+Imagen Funciones::Potencia(Imagen img, double alpha)
 {
     float proporcion = float(img.bpp) / (float)img.ancho;
     int in = 0, gris;
@@ -293,12 +298,87 @@ Imagen Funciones::Potencia(Imagen img)
     {
         for (int j = 0; j < img.ancho; j++)
         {
-            img.pixel[in].R = img.bpp * (pow((double)(img.pixel[in].R/255), 0.5));
-            img.pixel[in].G = img.bpp * (pow((double)(img.pixel[in].G/255), 0.5));
-            img.pixel[in].B = img.bpp * (pow((double)(img.pixel[in].B/255), 0.5));
-            cout << img.bpp * (pow((double)(img.pixel[in].R/255), 0.5)) << endl;
-            cout << img.bpp * (pow((double)(img.pixel[in].G/255), 0.5)) << endl;
-            cout << img.bpp * (pow((double)(img.pixel[in].B/255), 0.5)) << endl;
+            img.pixel[in].R = img.bpp * (pow(((double)img.pixel[in].R/img.bpp ), alpha));
+            img.pixel[in].G = img.bpp * (pow(((double)img.pixel[in].G/img.bpp ), alpha));
+            img.pixel[in].B = img.bpp * (pow(((double)img.pixel[in].B/img.bpp ), alpha));
+            in++;
+        }
+    }
+    return img;
+}
+
+// lampda / log(Alfa*Lampda + 1) * log(alfa*z+1)
+Imagen Funciones::AclaradoLogaritmico(Imagen img,double alpha) {
+    int in = 0;
+    for (int i = 0; i < img.alto; i++)
+    {
+        for (int j = 0; j < img.ancho; j++)
+        {
+            img.pixel[in].R = log(alpha * (img.pixel[in].R + 1)) * (img.bpp / log(alpha*(img.bpp + 1)));
+            img.pixel[in].G = log(alpha * (img.pixel[in].G + 1)) * (img.bpp / log(alpha*(img.bpp + 1)));
+            img.pixel[in].B = log(alpha * (img.pixel[in].B + 1)) * (img.bpp / log(alpha*(img.bpp + 1)));
+            in++;
+        }
+    }
+    return img;
+}
+
+// lampda * sin((pi*x)/(2*lampda))
+Imagen Funciones::Seno(Imagen img) {
+    int in = 0;
+    for (int i = 0; i < img.alto; i++)
+    {
+        for (int j = 0; j < img.ancho; j++)
+        {
+            img.pixel[in].R = img.bpp*sin((3.141592*img.pixel[in].R)/(2*img.bpp));
+            img.pixel[in].G = img.bpp*sin((3.141592*img.pixel[in].G)/(2*img.bpp));
+            img.pixel[in].B = img.bpp*sin((3.141592*img.pixel[in].B)/(2*img.bpp));
+            in++;
+        }
+    }
+    return img;
+}
+// Aclarado exponencial
+Imagen Funciones::Exponencial(Imagen img, double alpha) {
+    int in = 0;
+    for (int i = 0; i < img.alto; i++)
+    {
+        for (int j = 0; j < img.ancho; j++)
+        {
+            img.pixel[in].R = ((img.bpp)/(1 - exp(-1 * alpha))) * (1 - exp((-1 * alpha * img.pixel[in].R)/img.bpp));
+            img.pixel[in].G = ((img.bpp)/(1 - exp(-1 * alpha))) * (1 - exp((-1 * alpha * img.pixel[in].G)/img.bpp));
+            img.pixel[in].B = ((img.bpp)/(1 - exp(-1 * alpha))) * (1 - exp((-1 * alpha * img.pixel[in].B)/img.bpp));
+            in++;
+        }
+    }
+    return img;
+}
+// Oscurecimiento cosenoidal
+Imagen Funciones::Cosenoidal(Imagen img) {
+    int in = 0;
+    for (int i = 0; i < img.alto; i++)
+    {
+        for (int j = 0; j < img.ancho; j++)
+        {
+            img.pixel[in].R = img.bpp*(1-cos((3.141592*img.pixel[in].R)/(2*img.bpp)));
+            img.pixel[in].G = img.bpp*(1-cos((3.141592*img.pixel[in].G)/(2*img.bpp)));
+            img.pixel[in].B = img.bpp*(1-cos((3.141592*img.pixel[in].B)/(2*img.bpp)));
+            in++;
+        }
+    }
+    return img;
+
+}
+// Oscurencimiento exponencial
+Imagen Funciones::Exponencial2(Imagen img, double alpha) {
+    int in = 0;
+    for (int i = 0; i < img.alto; i++)
+    {
+        for (int j = 0; j < img.ancho; j++)
+        {
+            img.pixel[in].R = (img.bpp/(exp(alpha)-1))*(exp((alpha*img.pixel[in].R)/img.bpp)-1);
+            img.pixel[in].G = (img.bpp/(exp(alpha)-1))*(exp((alpha*img.pixel[in].G)/img.bpp)-1);
+            img.pixel[in].B = (img.bpp/(exp(alpha)-1))*(exp((alpha*img.pixel[in].B)/img.bpp)-1);
             in++;
         }
     }

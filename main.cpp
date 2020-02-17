@@ -75,7 +75,13 @@ int main()
         cout << "(4) Degradado (Abajo a arriba)" << endl;
         cout << "(5) Imagen negativa" << endl;
         cout << "(6) Escala de grises" << endl;
-        cout << "(7) Salir del programa" << endl;
+        cout << "(7) Correcion gamma" << endl;
+        cout << "(8) Aclarado Logaritmico" << endl;
+        cout << "(9) Seno" << endl;
+        cout << "(10) Exponencial" << endl;
+        cout << "(11) Cosenoidal" << endl;
+        cout << "(12) Oscurecimiento exponencial" << endl;
+        cout << "(13) Salir del programa" << endl;
         cout << "Accion: "; cin >> respuesta;
         switch (respuesta)
         {
@@ -170,8 +176,7 @@ int main()
                 string n;
                 Imagen img = CrearCargar();
                 Imagen copia = f.Copiar(img);
-                // f.EscalaGrises(copia);
-                f.Potencia(copia);
+                f.EscalaGrises(copia);
                 cout << "------------------------------" << endl << "Imagen generada correctamente" << endl;
                 // f.Imprimir(copia);
                 cout << "Desea guardar la nueva imagen? (1 = si, 0 = no): "; cin >> ans;
@@ -183,6 +188,116 @@ int main()
             }
             break;
         case 7:
+            {
+                int ans = -1;
+                string n;
+                Imagen img = CrearCargar();
+                Imagen copia = f.Copiar(img);
+                double alpha;
+                cout << "Ingrese el valor de alpha: "; cin >> alpha;
+                f.Potencia(copia, alpha);
+                cout << "------------------------------" << endl << "Imagen generada correctamente" << endl;
+                // f.Imprimir(copia);
+                cout << "Desea guardar la nueva imagen? (1 = si, 0 = no): "; cin >> ans;
+                if(ans == 1)
+                {
+                    cout << "Nombre del nuevo archivo: "; cin >> n;
+                    f.Guardar(copia, n);
+                }
+            }
+            break;
+        case 8:
+            {
+                int ans = -1;
+                string n;
+                Imagen img = CrearCargar();
+                Imagen copia = f.Copiar(img);
+                double alpha;
+                cout << "Ingrese el valor de alpha: "; cin >> alpha;
+                f.AclaradoLogaritmico(copia, alpha);
+                cout << "------------------------------" << endl << "Imagen generada correctamente" << endl;
+                // f.Imprimir(copia);
+                cout << "Desea guardar la nueva imagen? (1 = si, 0 = no): "; cin >> ans;
+                if(ans == 1)
+                {
+                    cout << "Nombre del nuevo archivo: "; cin >> n;
+                    f.Guardar(copia, n);
+                }
+            }
+            break;
+        case 9:
+            {
+                int ans = -1;
+                string n;
+                Imagen img = CrearCargar();
+                Imagen copia = f.Copiar(img);
+                f.Seno(copia);
+                cout << "------------------------------" << endl << "Imagen generada correctamente" << endl;
+                // f.Imprimir(copia);
+                cout << "Desea guardar la nueva imagen? (1 = si, 0 = no): "; cin >> ans;
+                if(ans == 1)
+                {
+                    cout << "Nombre del nuevo archivo: "; cin >> n;
+                    f.Guardar(copia, n);
+                }
+            }
+            break;
+        case 10:
+            {
+                int ans = -1;
+                string n;
+                Imagen img = CrearCargar();
+                Imagen copia = f.Copiar(img);
+                double alpha;
+                cout << "Ingrese el valor de alpha: "; cin >> alpha;
+                f.Exponencial(copia, alpha);
+                cout << "------------------------------" << endl << "Imagen generada correctamente" << endl;
+                // f.Imprimir(copia);
+                cout << "Desea guardar la nueva imagen? (1 = si, 0 = no): "; cin >> ans;
+                if(ans == 1)
+                {
+                    cout << "Nombre del nuevo archivo: "; cin >> n;
+                    f.Guardar(copia, n);
+                }
+            }
+            break;
+        case 11:
+            {
+                int ans = -1;
+                string n;
+                Imagen img = CrearCargar();
+                Imagen copia = f.Copiar(img);
+                f.Cosenoidal(copia);
+                cout << "------------------------------" << endl << "Imagen generada correctamente" << endl;
+                // f.Imprimir(copia);
+                cout << "Desea guardar la nueva imagen? (1 = si, 0 = no): "; cin >> ans;
+                if(ans == 1)
+                {
+                    cout << "Nombre del nuevo archivo: "; cin >> n;
+                    f.Guardar(copia, n);
+                }
+            }
+            break;
+        case 12:
+            {
+                int ans = -1;
+                string n;
+                Imagen img = CrearCargar();
+                Imagen copia = f.Copiar(img);
+                double alpha;
+                cout << "Ingrese el valor de alpha: "; cin >> alpha;
+                f.Exponencial2(copia, alpha);
+                cout << "------------------------------" << endl << "Imagen generada correctamente" << endl;
+                // f.Imprimir(copia);
+                cout << "Desea guardar la nueva imagen? (1 = si, 0 = no): "; cin >> ans;
+                if(ans == 1)
+                {
+                    cout << "Nombre del nuevo archivo: "; cin >> n;
+                    f.Guardar(copia, n);
+                }
+            }
+            break;
+        case 13:
             cout << "Programa finalizado :)";
             return 0;
             break;
